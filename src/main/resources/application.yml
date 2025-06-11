@@ -1,0 +1,4 @@
+spring:
+  application:
+    name: devops-cidc
+    version: 1
