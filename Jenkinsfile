@@ -72,23 +72,21 @@ pipeline {
                     }
                 }
             }
-//             stage('Deploy to Elastic Beanstalk') {
-//                 steps {
-//                     script {
-//                         def version = "v-${env.BUILD_NUMBER}"
-//                         def zipName = "prinshu-app-${env.BUILD_NUMBER}.zip"
-//
-//                         echo "\033[1;36m📂 Preparing deployment ZIP: ${zipName}\033[0m"
-//                         dir('sbjenkins/target') {
-//                             echo "\033[1;36m☁️ Uploading ${zipName} to S3 bucket: ${S3_BUCKET}\033[0m"
-//                             // Create ZIP with jar + Procfile
-//                             sh """
-//                             cp *.jar application.jar
-//                             cp ../Procfile .
-//                             zip -r ${zipName} application.jar Procfile
-//                             aws s3 cp ${zipName} s3://${S3_BUCKET}/${zipName} --region ${AWS_REGION}
-//                         """
-//
+            stage('Deploy to Elastic Beanstalk') {
+                steps {
+                    script {
+                        def version = "v-${env.BUILD_NUMBER}"
+                        def zipName = "rishu-app-${env.BUILD_NUMBER}.zip"
+
+                        echo "\033[1;36m📂 Preparing deployment ZIP: ${zipName}\033[0m"
+                        dir('./target') {
+                            echo "\033[1;36m☁️ Uploading ${zipName} to S3 bucket: ${S3_BUCKET}\033[0m"
+                            sh """
+                            cp *.jar application.jar
+                            zip -r ${zipName} application.jar
+                            aws s3 cp ${zipName} s3://${S3_BUCKET}/${zipName} --region ${AWS_REGION}
+                        """
+
 //                             echo "\033[1;34m📡 Registering new Elastic Beanstalk version: ${version}\033[0m"
 //                             // Register new application version
 //                             sh """
@@ -107,10 +105,10 @@ pipeline {
 //                               --version-label ${version} \
 //                               --region ${AWS_REGION}
 //                         """
-//                         }
-//                     }
-//                 }
-//             }
+                        }
+                    }
+                }
+            }
         }
 
         post {
