@@ -10,7 +10,7 @@ pipeline {
             AWS_REGION = 'ap-south-1'
             S3_BUCKET = credentials('eb-s3-bucket')
             EB_APP_NAME = credentials('eb-app-name')
-            EB_ENV_NAME = 'rishu-dev-jenkins-env'
+            EB_ENV_NAME = 'rishu-devops-kdu-cicd-01-default-ebs-env'
         }
 
         tools {
@@ -72,6 +72,7 @@ pipeline {
                     }
                 }
             }
+
             stage('Deploy to Elastic Beanstalk') {
                 steps {
                     script {
@@ -85,26 +86,26 @@ pipeline {
                             cp *.jar application.jar
                             zip -r ${zipName} application.jar
                             aws s3 cp ${zipName} s3://${S3_BUCKET}/${zipName} --region ${AWS_REGION}
-                        """
+                            """
 
-//                             echo "\033[1;34m📡 Registering new Elastic Beanstalk version: ${version}\033[0m"
-//                             // Register new application version
-//                             sh """
-//                             aws elasticbeanstalk create-application-version \
-//                               --application-name ${EB_APP_NAME} \
-//                               --version-label ${version} \
-//                               --source-bundle S3Bucket=${S3_BUCKET},S3Key=${zipName} \
-//                               --region ${AWS_REGION}
-//                         """
-//
-//                             echo "\033[1;32m🚀 Updating EB environment: ${EB_ENV_NAME} to version: ${version}\033[0m"
-//                             // Update EB environment
-//                             sh """
-//                             aws elasticbeanstalk update-environment \
-//                               --environment-name ${EB_ENV_NAME} \
-//                               --version-label ${version} \
-//                               --region ${AWS_REGION}
-//                         """
+                            echo "\033[1;34m📡 Registering new Elastic Beanstalk version: ${version}\033[0m"
+                            // Register new application version
+                            sh """
+                            aws elasticbeanstalk create-application-version \
+                              --application-name ${EB_APP_NAME} \
+                              --version-label ${version} \
+                              --source-bundle S3Bucket=${S3_BUCKET},S3Key=${zipName} \
+                              --region ${AWS_REGION}
+                            """
+
+                            echo "\033[1;32m🚀 Updating EB environment: ${EB_ENV_NAME} to version: ${version}\033[0m"
+                            // Update EB environment
+                            sh """
+                            aws elasticbeanstalk update-environment \
+                              --environment-name ${EB_ENV_NAME} \
+                              --version-label ${version} \
+                              --region ${AWS_REGION}
+    //                         """
                         }
                     }
                 }
