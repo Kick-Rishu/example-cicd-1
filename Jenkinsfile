@@ -34,7 +34,7 @@ pipeline {
             stage('Build') {
                 steps {
                     echo "\033[1;34m🏗️ Building the Spring Boot project...\033[0m"
-                    dir('sbjenkins') {
+                    dir('./') {
                         sh 'mvn clean compile'
                     }
                 }
@@ -43,7 +43,7 @@ pipeline {
             stage('Test') {
                 steps {
                     echo "\033[1;35m🧪 Running unit tests...\033[0m"
-                    dir('sbjenkins') {
+                    dir('./') {
                         sh 'mvn test'
                     }
                 }
@@ -52,7 +52,7 @@ pipeline {
             stage('SonarQube Analysis') {
                 steps {
                     echo "\033[1;33m🔎 Performing static code analysis with SonarQube...\033[0m"
-                    dir('sbjenkins') {
+                    dir('./') {
                         withSonarQubeEnv("${SONARQUBE_SERVER}") {
                             sh '''
                             mvn sonar:sonar \
@@ -67,7 +67,7 @@ pipeline {
             stage('Package') {
                 steps {
                     echo "\033[1;34m📦 Packaging Spring Boot JAR...\033[0m"
-                    dir('sbjenkins') {
+                    dir('./') {
                         sh 'mvn clean package -DskipTests'
                     }
                 }
