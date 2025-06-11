@@ -105,7 +105,7 @@ pipeline {
                               --environment-name ${EB_ENV_NAME} \
                               --version-label ${version} \
                               --region ${AWS_REGION}
-    //                         """
+                            """
                         }
                     }
                 }
