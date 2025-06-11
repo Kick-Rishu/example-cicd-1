@@ -22,10 +22,10 @@ pipeline {
                 steps {
                     echo "\033[1;36m📥 Checking out source code from GitHub...\033[0m"
                     checkout([$class: 'GitSCM',
-                    branches: [[name: 'cicd-assignment-1-dev']],
+                    branches: [[name: 'main']],
                     userRemoteConfigs: [[
-                        url: 'https://github.com/prinshu2219/kdu-2025-devops-track.git',
-                        credentialsId: 'github-access-token'
+                        url: 'https://github.com/Kick-Rishu/example-cicd-1/',
+                        credentialsId: 'Github-CICD-Example'
                     ]]
                 ])
                 }
