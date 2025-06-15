@@ -1,7 +1,7 @@
 spring:
   application:
     name: devops-cidc
-    version: 1
+    version: 2
 
 server:
   port: 5000
